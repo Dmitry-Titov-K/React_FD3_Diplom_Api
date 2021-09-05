@@ -10,7 +10,10 @@ import { TrackModule } from './track/track.module';
       rootPath: resolve(__dirname, 'static'),
     }),
     TrackModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/music_app'),
+    MongooseModule.forRoot(
+      process.env.MONGODB_URI ||
+        'mongodb+srv://application:dtyX6jzytQMbDmo2@cluster0.cri5u.mongodb.net/fd3diplom?retryWrites=true&w=majority',
+    ),
   ],
 })
 export class AppModule {}
