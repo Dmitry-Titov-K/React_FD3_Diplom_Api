@@ -29,12 +29,14 @@ export class TrackService {
 
     return track;
   }
-  async getAll(count: number = 10, offset: number = 0): Promise<Track[]> {
+  async getAll(count: number = 10, offset: number = 0): Promise<any> {
     const tracks = await this.trackModel
       .find()
       .skip(Number(offset))
       .limit(Number(count));
-    return tracks;
+      const allFilesCount = await this.trackModel.find().countDocuments()
+    
+    return {tracks, allFilesCount};
   }
   async getOne(id: ObjectId): Promise<Track> {
     const track = await this.trackModel.findById(id).populate('comments');

@@ -29,4 +29,4 @@ export class Playlist {
   playlists: Playlist;
 }
 
-export const TrackSchema = SchemaFactory.createForClass(Playlist);
+export const PlaylistSchema = SchemaFactory.createForClass(Playlist);

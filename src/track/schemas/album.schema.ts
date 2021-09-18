@@ -28,4 +28,4 @@ export class Album {
   comments: Comment[];
 }
 
-export const TrackSchema = SchemaFactory.createForClass(Album);
+export const AlbumSchema = SchemaFactory.createForClass(Album);

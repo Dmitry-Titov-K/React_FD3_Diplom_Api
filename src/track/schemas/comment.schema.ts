@@ -12,6 +12,15 @@ export class Comment {
   @Prop()
   text: string;
 
+  @Prop()
+  likes: number;
+
+  @Prop()
+  dislikes:number;
+
+  @Prop({type:Date, default:Date.now})
+  create:Date;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Track' })
   track: Track;
 }
