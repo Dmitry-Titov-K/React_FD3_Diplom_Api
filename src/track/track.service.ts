@@ -66,6 +66,10 @@ export class TrackService {
     await track.save();
     return comment;
   }
+  async deleteComment(id:ObjectId):Promise<Comment>{
+    const comment = await this.commentModel.findByIdAndDelete(id)
+    return comment
+  }
   async listen(id: ObjectId): Promise<void> {
     const track = await this.trackModel.findById(id);
     track.listens += 1;

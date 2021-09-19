@@ -46,6 +46,10 @@ export class TrackController {
   getCommets(@Param('id') id:ObjectId){
     return this.trackService.getComments(id)
   }
+  @Delete('/comment/:id')
+  deleteComment(@Param('id') id:ObjectId){
+    return this.trackService.deleteComment(id)
+  }
   @Delete(':id')
   delete(@Param('id') id: ObjectId) {
     return this.trackService.delete(id);
