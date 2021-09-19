@@ -34,18 +34,24 @@ export class TrackService {
       .find()
       .skip(Number(offset))
       .limit(Number(count));
-      const allFilesCount = await this.trackModel.find().countDocuments()
+      const total = await this.trackModel.find().countDocuments()
     
-    return {tracks, allFilesCount};
+    return {tracks, total};
   }
   async getOne(id: ObjectId): Promise<Track> {
     const track = await this.trackModel.findById(id).populate('comments');
     return track;
   }
-  async delete(id: ObjectId): Promise<ObjectId> {
+  async getComments(id:ObjectId):Promise<any>{
+    const track = await this.trackModel.findById(id).populate('comments')
+    return track.comments
+  }
+  async delete(id: ObjectId): Promise<any> {
     try {
+
       const track = await this.trackModel.findByIdAndDelete(id);
-      return track._id;
+      const total = await this.trackModel.find().countDocuments()
+      return {track:track._id, total} ;
     } catch (err) {
       console.log(err);
     }
