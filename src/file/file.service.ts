@@ -12,6 +12,7 @@ export enum FileType {
 export class FileService {
   createFile(type: FileType, file) {
     try {
+      console.log(file)
       const fileExtention = file.originalname.split('.').pop();
 
       const fileName = uuid.v4() + '.' + fileExtention;

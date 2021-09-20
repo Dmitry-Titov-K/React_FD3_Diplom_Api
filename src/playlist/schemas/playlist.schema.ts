@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
+import { Track } from 'src/track/schemas/track.schema';
 
-export type TrackDocument = Playlist & mongoose.Document;
+export type PlaylistDocument = Playlist & mongoose.Document;
 
 @Schema()
 export class Playlist {
@@ -13,20 +14,14 @@ export class Playlist {
   artist: string;
 
   @Prop()
-  text: string;
-
-  @Prop()
   listens: number;
 
   @Prop()
   picture: string;
 
-  @Prop()
-  audio: string;
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })
-  comments: Comment[];
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Playlist' }] })
-  playlists: Playlist;
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Track' }] })
+  tracks: Track[];
+ 
 }
 
 export const PlaylistSchema = SchemaFactory.createForClass(Playlist);

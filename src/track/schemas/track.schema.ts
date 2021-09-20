@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
 import { Album } from './album.schema';
-import { Playlist } from './playlist.schema';
+import { Playlist } from '../../playlist/schemas/playlist.schema';
 
 export type TrackDocument = Track & mongoose.Document;
 
