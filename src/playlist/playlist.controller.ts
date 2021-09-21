@@ -1,3 +1,4 @@
+import { PlaylistService } from 'src/playlist/playlist.service';
 import { ObjectId } from 'mongoose';
 import { CreatePlaylistDto } from './dto/create-playlist';
 import {
@@ -12,7 +13,7 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { PlaylistService } from './playlist.service';
+
 import {
   FileFieldsInterceptor,
   FileInterceptor,
@@ -41,5 +42,9 @@ export class PlaylistController {
   @Put()
   addTrack(@Query('id') id: ObjectId, @Query('trackId') trackId: ObjectId) {
     return this.playlistService.addTracks(trackId, id);
+  }
+  @Put('/track')
+  deleteTrack(@Query('id') id: ObjectId, @Query('trackId') trackId: ObjectId) {
+    return this.playlistService.deleteTrack(trackId, id);
   }
 }

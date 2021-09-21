@@ -34,7 +34,7 @@ export class PlaylistService {
     }
   }
   async getAll(): Promise<any> {
-    const playlists = await this.PlaylistkModel.find().populate('tracks');
+    const playlists = await this.PlaylistkModel.find();
     const totlaPlaylists = await this.PlaylistkModel.find().countDocuments();
     return { playlists, totlaPlaylists };
   }
@@ -46,19 +46,21 @@ export class PlaylistService {
     const playlist = await this.PlaylistkModel.findById(id).populate('tracks');
     return playlist;
   }
-  async addTracks(trackId: ObjectId, playlistId: ObjectId): Promise<Playlist> {
-    console.log(trackId);
+  async addTracks(trackId: ObjectId, playlistId: ObjectId): Promise<Track> {
     const track = await this.trackModel.findById(trackId).populate('comments');
-    const tracks = await this.trackModel.find();
-    console.log('Track:', track);
-
     if (!track)
       throw new HttpException('Track dont find', HttpStatus.NOT_FOUND);
 
     const playlist = await this.PlaylistkModel.findById(playlistId);
-    console.log(playlist);
     playlist.tracks.push(track);
     playlist.save();
-    return playlist;
+
+    return track;
+  }
+  async deleteTrack(trackId: ObjectId, playlistId: ObjectId): Promise<any> {
+    const playlist = await this.PlaylistkModel.findById(playlistId);
+    playlist.remove(playlist.tracks.filter((item: any) => item !== trackId));
+    playlist.save();
+    return trackId;
   }
 }
