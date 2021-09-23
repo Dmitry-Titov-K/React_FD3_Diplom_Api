@@ -16,10 +16,13 @@ export class Comment {
   likes: number;
 
   @Prop()
-  dislikes:number;
+  dislikes: number;
 
-  @Prop({type:Date, default:Date.now})
-  create:Date;
+  @Prop()
+  avatarURL: string;
+
+  @Prop({ type: Date, default: Date.now })
+  create: Date;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Track' })
   track: Track;
