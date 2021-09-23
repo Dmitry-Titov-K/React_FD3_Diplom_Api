@@ -1,8 +1,6 @@
-import { TrackDocument } from '../../track/schemas/track.schema'
+import { TrackDocument } from '../../track/schemas/track.schema';
 export class CreatePlaylistDto {
-    readonly name: string;
-    readonly tracks?: TrackDocument[];
-  
-   
-  }
-  
+  readonly name: string;
+  readonly tracks?: TrackDocument[];
+  readonly owner: string;
+}

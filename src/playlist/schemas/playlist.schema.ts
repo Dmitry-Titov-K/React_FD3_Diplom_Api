@@ -11,17 +11,16 @@ export class Playlist {
   name: string;
 
   @Prop()
-  artist: string;
+  owner: string;
 
   @Prop()
   listens: number;
 
   @Prop()
-  picture: string;
+  picture?: string;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Track' }] })
   tracks: Track[];
- 
 }
 
 export const PlaylistSchema = SchemaFactory.createForClass(Playlist);

@@ -22,7 +22,19 @@ export class PlaylistService {
   ) {}
   async create(dto: CreatePlaylistDto, picture): Promise<Playlist> {
     try {
-      const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
+      if (picture) {
+        const picturePath = this.fileService.createFile(
+          FileType.IMAGE,
+          picture,
+        );
+      }
+      const picturePath = '';
+      if (!dto) {
+        throw new HttpException(
+          'create playlist dto requered!',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
       const playlist = await this.PlaylistkModel.create({
         ...dto,
         listens: 0,
