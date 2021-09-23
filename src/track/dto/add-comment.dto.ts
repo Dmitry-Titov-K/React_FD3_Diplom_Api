@@ -5,4 +5,5 @@ export class CreateComment {
   readonly text: string;
   readonly trackId: ObjectId;
   readonly avatarURL: string;
+  readonly owner: string;
 }

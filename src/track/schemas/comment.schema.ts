@@ -21,6 +21,9 @@ export class Comment {
   @Prop()
   avatarURL: string;
 
+  @Prop()
+  owner: string;
+
   @Prop({ type: Date, default: Date.now })
   create: Date;
 
