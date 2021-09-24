@@ -40,10 +40,14 @@ export class PlaylistService {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
-  async getAll(ownerId: string): Promise<any> {
-    const playlists = await this.PlaylistkModel.findOne({ owner: ownerId });
+  async getAll(): Promise<any> {
+    const playlists = await this.PlaylistkModel.find();
     const totlaPlaylists = await this.PlaylistkModel.find().countDocuments();
     return { playlists, totlaPlaylists };
+  }
+  async getUserPlaylists(userId: string): Promise<any> {
+    const playlist = await this.PlaylistkModel.find({ owner: userId });
+    return playlist;
   }
   async delete(id: ObjectId): Promise<Playlist> {
     const playlist = await this.PlaylistkModel.findByIdAndDelete(id);
@@ -51,14 +55,20 @@ export class PlaylistService {
   }
   async getById(id: ObjectId): Promise<Playlist> {
     const playlist = await this.PlaylistkModel.findById(id).populate('tracks');
+    console.log(playlist);
+    if (!playlist)
+      throw new HttpException('Playlist not defined', HttpStatus.NOT_FOUND);
     return playlist;
   }
   async addTracks(trackId: ObjectId, playlistId: ObjectId): Promise<Track> {
     const track = await this.trackModel.findById(trackId).populate('comments');
+
     if (!track)
       throw new HttpException('Track dont find', HttpStatus.NOT_FOUND);
-
+    const dublicateTrack = await this.PlaylistkModel.find({ _id: playlistId });
+    console.log(dublicateTrack);
     const playlist = await this.PlaylistkModel.findById(playlistId);
+
     playlist.tracks.push(track);
     playlist.save();
 
