@@ -33,6 +33,7 @@ export class TrackService {
   async getAll(count: number = 10, offset: number = 0): Promise<any> {
     const tracks = await this.trackModel
       .find()
+      .sort({'listens':-1})
       .skip(Number(offset))
       .limit(Number(count));
     const total = await this.trackModel.find().countDocuments();

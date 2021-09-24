@@ -27,9 +27,9 @@ export class PlaylistController {
   addPlaylist(@UploadedFile() picture, @Body() dto: CreatePlaylistDto) {
     return this.playlistService.create(dto, picture);
   }
-  @Get()
-  getAll() {
-    return this.playlistService.getAll();
+  @Get('/user/:id')
+  getAll(@Param(':id') id: string) {
+    return this.playlistService.getAll(id);
   }
   @Delete(':id')
   delete(@Param('id') id: ObjectId) {

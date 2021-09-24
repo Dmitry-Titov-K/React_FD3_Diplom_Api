@@ -1,12 +1,7 @@
 import { FileService, FileType } from './../file/file.service';
 import { CreatePlaylistDto } from './dto/create-playlist';
 
-import {
-  HttpCode,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 
@@ -45,8 +40,8 @@ export class PlaylistService {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
-  async getAll(): Promise<any> {
-    const playlists = await this.PlaylistkModel.find();
+  async getAll(ownerId: string): Promise<any> {
+    const playlists = await this.PlaylistkModel.findOne({ owner: ownerId });
     const totlaPlaylists = await this.PlaylistkModel.find().countDocuments();
     return { playlists, totlaPlaylists };
   }
@@ -70,9 +65,12 @@ export class PlaylistService {
     return track;
   }
   async deleteTrack(trackId: ObjectId, playlistId: ObjectId): Promise<any> {
-    const playlist = await this.PlaylistkModel.findById(playlistId);
-    playlist.remove(playlist.tracks.filter((item: any) => item !== trackId));
+    const playlist = await this.PlaylistkModel.findByIdAndUpdate(
+      { _id: playlistId },
+      { $pull: { tracks: { $in: trackId } } },
+    );
     playlist.save();
+    console.log(playlist);
     return trackId;
   }
 }

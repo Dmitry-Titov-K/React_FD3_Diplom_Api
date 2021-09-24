@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
+
 import { Track } from 'src/track/schemas/track.schema';
 
 export type PlaylistDocument = Playlist & mongoose.Document;
