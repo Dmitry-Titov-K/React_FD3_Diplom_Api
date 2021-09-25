@@ -12,9 +12,7 @@ RUN npm run build
 
 COPY . .
 
-ENV PORT 4200
-ENV MONGODB_URI mongodb+srv://application:dtyX6jzytQMbDmo2@cluster0.cri5u.mongodb.net/fd3diplom?retryWrites=true&w=majority
-
+COPY --from=development /usr/src/app/dist ./dist
 
 EXPOSE ${PORT}
 
