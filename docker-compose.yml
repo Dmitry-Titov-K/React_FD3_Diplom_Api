@@ -1,40 +1,45 @@
-version: '3.8'
+version: '3'
 
 services:
-  dev:
-    container_name: nestjs_api_dev
-    image: nestjs-api-dev:1.0.0
+  react-app:
+    image: react-app
+    stdin_open: true
+    restart: always
+    stdin_open: true
     build:
-      context: .
-      target: development
-      dockerfile: ./Dockerfile
-    command: npm run start:debug
-    ports:
-      - 5000:5000
-      - 9229:9229
-    networks:
-      - nesjs-network
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    restart: unless-stopped
-  prod:
-    container_name: nestjs_api_prod
-    image: nestjs-api-prod:1.0.0
-    build:
-      context: .
       target: production
-      dockerfile: ./Dockerfile
-    command: npm run start:prod
+      context: .
     ports:
-      - 5000:5000
-      - 9229:9229
+      - '3000:3000'
     networks:
-      - nesjs-network
+      - diplom
+  api-server:
+    image: api-server
+    restart: always
+    build:
+      context: .
+    ports:
+      - '5000:5000'
+    networks:
+      - diplom
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    restart: always
+    build:
+      context: .
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    restart: unless-stopped
-
+      - ./data-node:/data/db
+      - mongo-data:/data/db
+    ports:
+      - '27017:27017'
+    command: mongod --noauth
+    networks:
+      - diplom
 networks:
-  nesjs-network:
+  diplom:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
