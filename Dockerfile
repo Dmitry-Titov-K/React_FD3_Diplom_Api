@@ -12,11 +12,9 @@ RUN npm run build
 
 COPY . .
 
-COPY --from=development /usr/src/app/dist ./dist
 
 EXPOSE ${PORT}
 
-VOLUME [ "/app/data" ]
-
+VOLUME [ "/app/dist" ]
 
 CMD ["node", "dist/main"]
